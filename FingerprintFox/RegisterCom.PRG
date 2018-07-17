@@ -1,0 +1,95 @@
+Function IsDotNet(lcFrameworkPath,lcVersion)
+Local loAPI As wwAPI
+Set Step On 
+
+lcVersion = ""
+lcFrameworkPath = ""
+
+loAPI = Createobject("wwAPI")
+lcWinDir = loAPI.getSystemdir(.T.)
+lcVersion = loAPI.Readregistrystring(HKEY_LOCAL_MACHINE,"Software\Microsoft\ASP.Net","RootVer")
+If Isnull(lcFrameworkPath)
+	Return .F.
+Endif
+
+lnAt = At(".",lcVersion,3)
+If lnAt > 0
+	lcVersion = Substr(lcVersion,1,lnAt) + "0"
+Endif
+
+lcFrameworkPath = loAPI.Readregistrystring(HKEY_LOCAL_MACHINE,"Software\Microsoft\ASP.Net\"+lcVersion,"PATH")
+If Isnull(lcFrameworkPath)
+	lcFrameworkPath = ""
+Else
+	lcFrameworkPath = Addbs(lcFrameworkPath)
+Endif
+
+Return .T.
+
+Function  RegisterDotNetComponent(lcDotNetDLL As String, lcProgId As String,;
+	lcError As String)  ;
+	as Boolean
+Local lcFrameworkPath, lcVersion
+
+If lcProgId = "UNREGISTER"
+	llUnregister = .T.
+	lcProgId = ""
+Else
+	llUnregister = .F.
+Endif
+
+*** if the object is already registered exit
+If !Empty(lcProgId) And ISCOMOBJECT(lcProgId)
+	lcError = ""
+	Return .T.
+Endif
+
+*** Try to register
+lcFrameworkPath = ""
+
+If !IsDotNet(@lcFrameworkPath)
+	lcError = "DotNet Framework not installed or path not found."
+	Return .F.
+Endif
+
+lcRun = ShortPath(Addbs(lcFrameworkPath) + "regasm.exe")
+If Empty(lcRun)  && File doesn't exist
+	lcError = "Couldn't find RegAsm.exe at:" + Chr(13) +;
+		lcFrameworkPath + "regasm.exe"
+	Return .F.
+Endif
+
+If llUnregister
+	lcRun = lcRun + [ "] +  ShortPath(Fullpath(lcDotNetDLL)) + [" /unregister]
+Else
+	lcRun = lcRun + [ "] +  ShortPath(Fullpath(lcDotNetDLL)) + [" /codebase]
+Endif
+_Cliptext = lcRun
+
+Wait Window "Hang on. Trying to register " + ;
+	JUSTFNAME(lcDotNetDLL) + " ..." + Chr(13) +;
+	"This may take a few seconds..." Nowait
+
+*** Long command lines must run 'windows console'
+If Len(lcRun) > 115
+	Run /N &lcRun
+*** Wait long enough to start runtime and register
+*** this can be really slow so allow enough time
+	Inkey(20)
+Else
+	Run &lcRun
+Endif
+
+Wait Clear
+
+If Empty(lcProgId)
+	Return .T.
+Endif
+
+llResult =  ISCOMOBJECT(lcProgId)
+If !llResult
+	lcError = "Registration of wwReflection.dll failed." + Chr(13) + Chr(13) + ;
+		"The command line has been pasted into your ClipBoard"
+Endif
+
+Return llResult
