@@ -102,7 +102,7 @@ namespace Opa.Poc.Fingerprint.Dto
 
             for (int i = 0; i <= bmp.Height - 1; i++)
             {
-                IntPtr p = new IntPtr((data.Scan0.ToInt64() + data.Stride) * i);
+                IntPtr p = new IntPtr(data.Scan0.ToInt64() + (data.Stride * i));
                 System.Runtime.InteropServices.Marshal.Copy(rgbBytes, i * bmp.Width * 3, p, bmp.Width * 3);
             }
 

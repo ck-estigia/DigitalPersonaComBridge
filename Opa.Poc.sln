@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{EBC6DB79-D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Opa.Poc.CallbackCapture.Test", "Opa.Poc.CallbackCapture.Test\Opa.Poc.CallbackCapture.Test.csproj", "{24891FAF-DC1E-43EE-80EB-40F9C66C545F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{B7E3155D-2D25-4603-9BB5-60217C882718}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Opa.Poc.ComInstaller", "Opa.Poc.ComInstaller\Opa.Poc.ComInstaller.vdproj", "{515880F6-34A8-499A-8123-A3D1C1E0BA53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,8 @@ Global
 		{24891FAF-DC1E-43EE-80EB-40F9C66C545F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24891FAF-DC1E-43EE-80EB-40F9C66C545F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24891FAF-DC1E-43EE-80EB-40F9C66C545F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{515880F6-34A8-499A-8123-A3D1C1E0BA53}.Debug|Any CPU.ActiveCfg = Release
+		{515880F6-34A8-499A-8123-A3D1C1E0BA53}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{70475CFC-2826-4F11-AD93-F6A1AA79ED99} = {D7AB84F2-0F1C-4186-B542-39A47E95D28A}
 		{FA321816-9263-4D83-8359-24BABE722D82} = {EBC6DB79-D64B-4442-93A3-B993480D5D28}
 		{24891FAF-DC1E-43EE-80EB-40F9C66C545F} = {EBC6DB79-D64B-4442-93A3-B993480D5D28}
+		{515880F6-34A8-499A-8123-A3D1C1E0BA53} = {B7E3155D-2D25-4603-9BB5-60217C882718}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {950C2AEC-CC84-4050-8DE9-2380EAD4FF3F}
